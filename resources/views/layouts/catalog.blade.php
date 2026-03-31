@@ -26,7 +26,22 @@
             <a href="{{ route('catalog.index') }}" class="text-2xl font-extrabold tracking-tight">
                 Curu<span class="text-amber-400">Kicks</span>
             </a>
-            <p class="text-sm text-zinc-500 hidden sm:block">Sneakers GT</p>
+            <div class="flex items-center gap-4">
+                <p class="text-sm text-zinc-500 hidden sm:block">Sneakers GT</p>
+                @auth
+                    <span class="text-sm text-zinc-400">{{ Auth::user()->name }}</span>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="text-sm text-zinc-500 hover:text-amber-400 transition-colors">
+                            Salir
+                        </button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="text-sm text-zinc-500 hover:text-amber-400 transition-colors">
+                        Iniciar Sesión
+                    </a>
+                @endauth
+            </div>
         </div>
     </header>
 
