@@ -9,8 +9,8 @@ use App\Filament\Resources\SneakerResource\Pages;
 use App\Models\Sneaker;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -123,7 +123,14 @@ class SneakerResource extends Resource
                         TextInput::make('stockx_url')
                             ->label('Link StockX')
                             ->url()
-                            ->placeholder('https://stockx.com/...'),
+                            ->placeholder('https://stockx.com/...')
+                            ->suffixAction(
+                                \Filament\Actions\Action::make('openStockx')
+                                    ->icon('heroicon-o-arrow-top-right-on-square')
+                                    ->url(fn ($record) => $record?->stockx_url)
+                                    ->openUrlInNewTab()
+                                    ->visible(fn ($record) => filled($record?->stockx_url))
+                            ),
                         Textarea::make('notes')
                             ->label('Notas Internas')
                             ->rows(3)
