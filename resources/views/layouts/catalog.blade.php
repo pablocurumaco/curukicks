@@ -29,6 +29,11 @@
             <div class="flex items-center gap-4">
                 <p class="text-sm text-zinc-500 hidden sm:block">Sneakers GT</p>
                 @auth
+                    @if(Auth::user()->hasRole(['admin', 'vendedor']))
+                        <a href="/admin" class="text-sm text-zinc-500 hover:text-amber-400 transition-colors">
+                            Panel
+                        </a>
+                    @endif
                     <span class="text-sm text-zinc-400">{{ Auth::user()->name }}</span>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
