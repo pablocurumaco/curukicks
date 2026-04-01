@@ -11,12 +11,35 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        {{-- Photo --}}
-        <div class="aspect-square bg-zinc-900 rounded-2xl border border-zinc-800 flex items-center justify-center">
-            <svg class="w-24 h-24 text-zinc-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
+        {{-- Photos --}}
+        <div class="space-y-3">
+            @if($sneaker->photos && count($sneaker->photos) > 0)
+                <div class="aspect-square bg-zinc-900 rounded-2xl border border-zinc-800 overflow-hidden">
+                    <img src="{{ Storage::disk('public')->url($sneaker->photos[0]) }}"
+                         alt="{{ $sneaker->model }} {{ $sneaker->colorway }}"
+                         class="w-full h-full object-cover">
+                </div>
+
+                @if(count($sneaker->photos) > 1)
+                    <div class="grid grid-cols-4 gap-2">
+                        @foreach(array_slice($sneaker->photos, 1) as $photo)
+                            <div class="aspect-square bg-zinc-900 rounded-lg border border-zinc-800 overflow-hidden">
+                                <img src="{{ Storage::disk('public')->url($photo) }}"
+                                     alt="{{ $sneaker->model }}"
+                                     class="w-full h-full object-cover"
+                                     loading="lazy">
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            @else
+                <div class="aspect-square bg-zinc-900 rounded-2xl border border-zinc-800 flex items-center justify-center">
+                    <svg class="w-24 h-24 text-zinc-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </div>
+            @endif
         </div>
 
         {{-- Details --}}

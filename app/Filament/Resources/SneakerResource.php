@@ -18,6 +18,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\TextInputColumn;
@@ -44,6 +45,22 @@ class SneakerResource extends Resource
     {
         return $schema
             ->components([
+                Section::make('Fotos')
+                    ->schema([
+                        FileUpload::make('photos')
+                            ->label('Fotos del Par')
+                            ->multiple()
+                            ->image()
+                            ->disk('public')
+                            ->directory('sneakers')
+                            ->reorderable()
+                            ->maxFiles(8)
+                            ->maxSize(10240)
+                            ->imageEditor()
+                            ->panelLayout('grid')
+                            ->columnSpanFull(),
+                    ]),
+
                 Section::make('Informacion del Par')
                     ->columns(3)
                     ->schema([
@@ -147,6 +164,14 @@ class SneakerResource extends Resource
                     ->label('#')
                     ->sortable()
                     ->width('50px'),
+
+                ImageColumn::make('photos')
+                    ->label('Foto')
+                    ->disk('public')
+                    ->square()
+                    ->limit(1)
+                    ->size(40)
+                    ->checkFileExistence(false),
 
                 TextColumn::make('model')
                     ->label('Modelo')

@@ -36,6 +36,7 @@ class Sneaker extends Model
         'is_public',
         'status',
         'slug',
+        'photos',
     ];
 
     protected function casts(): array
@@ -51,6 +52,7 @@ class Sneaker extends Model
             'stockx_price_usd' => 'integer',
             'sale_price_gt' => 'integer',
             'usd_multiplier' => 'integer',
+            'photos' => 'array',
         ];
     }
 
