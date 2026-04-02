@@ -20,29 +20,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body class="bg-zinc-950 text-white font-sans antialiased">
-    <header class="border-b border-zinc-800">
+<body class="bg-neutral-950 text-white font-sans antialiased">
+    <header class="border-b border-neutral-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex items-center justify-between">
             <a href="{{ route('catalog.index') }}" class="text-2xl font-extrabold tracking-tight">
-                Curu<span class="text-amber-400">Kicks</span>
+                Curu<span class="text-orange-500">Kicks</span>
             </a>
             <div class="flex items-center gap-4">
-                <p class="text-sm text-zinc-500 hidden sm:block">Sneakers GT</p>
+                <p class="text-sm text-neutral-500 hidden sm:block">Sneakers GT</p>
                 @auth
                     @if(Auth::user()->hasRole(['admin', 'vendedor']))
-                        <a href="/admin" class="text-sm text-zinc-500 hover:text-amber-400 transition-colors">
+                        <a href="/admin" class="text-sm text-neutral-500 hover:text-orange-400 transition-colors">
                             Panel
                         </a>
                     @endif
-                    <span class="text-sm text-zinc-400">{{ Auth::user()->name }}</span>
+                    <span class="text-sm text-neutral-400">{{ Auth::user()->name }}</span>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="text-sm text-zinc-500 hover:text-amber-400 transition-colors">
+                        <button type="submit" class="text-sm text-neutral-500 hover:text-orange-400 transition-colors">
                             Salir
                         </button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="text-sm text-zinc-500 hover:text-amber-400 transition-colors">
+                    <a href="{{ route('login') }}" class="text-sm text-neutral-500 hover:text-orange-400 transition-colors">
                         Iniciar Sesión
                     </a>
                 @endauth
@@ -54,8 +54,8 @@
         @yield('content')
     </main>
 
-    <footer class="border-t border-zinc-800 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 text-center text-sm text-zinc-600">
+    <footer class="border-t border-neutral-800 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 text-center text-sm text-neutral-600">
             &copy; {{ date('Y') }} CuruKicks &mdash; kicks.curumakito.com
         </div>
     </footer>

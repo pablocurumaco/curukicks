@@ -11,7 +11,7 @@
             @csrf
 
             <div>
-                <label for="email" class="block text-sm font-medium text-zinc-400 mb-2">Email</label>
+                <label for="email" class="block text-sm font-medium text-neutral-400 mb-2">Email</label>
                 <input
                     type="email"
                     id="email"
@@ -19,7 +19,7 @@
                     value="{{ old('email') }}"
                     required
                     autofocus
-                    class="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                    class="w-full px-4 py-3 bg-neutral-900 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     placeholder="tu@email.com"
                 >
                 @error('email')
@@ -28,13 +28,13 @@
             </div>
 
             <div>
-                <label for="password" class="block text-sm font-medium text-zinc-400 mb-2">Contraseña</label>
+                <label for="password" class="block text-sm font-medium text-neutral-400 mb-2">Contraseña</label>
                 <input
                     type="password"
                     id="password"
                     name="password"
                     required
-                    class="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                    class="w-full px-4 py-3 bg-neutral-900 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     placeholder="••••••••"
                 >
                 @error('password')
@@ -48,21 +48,21 @@
                     id="remember"
                     name="remember"
                     {{ old('remember') ? 'checked' : '' }}
-                    class="w-4 h-4 rounded border-zinc-600 bg-zinc-900 text-amber-400 focus:ring-amber-400 focus:ring-offset-0"
+                    class="w-4 h-4 rounded border-neutral-600 bg-neutral-900 text-orange-500 focus:ring-orange-500 focus:ring-offset-0"
                 >
-                <label for="remember" class="ml-2 text-sm text-zinc-400">Recordarme</label>
+                <label for="remember" class="ml-2 text-sm text-neutral-400">Recordarme</label>
             </div>
 
             <button
                 type="submit"
-                class="w-full py-3 px-4 bg-amber-400 hover:bg-amber-500 text-zinc-900 font-semibold rounded-lg transition-colors"
+                class="w-full py-3 px-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-colors"
             >
                 Entrar
             </button>
         </form>
 
         <p class="text-center mt-6">
-            <a href="{{ route('catalog.index') }}" class="text-sm text-zinc-500 hover:text-amber-400 transition-colors">
+            <a href="{{ route('catalog.index') }}" class="text-sm text-neutral-500 hover:text-orange-400 transition-colors">
                 &larr; Volver al catálogo
             </a>
         </p>
