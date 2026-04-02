@@ -75,9 +75,12 @@ class ImportSneakersFromExcel extends Command
             $colorway = trim($row['C'] ?? '');
             $size = trim($row['E'] ?? '');
 
+            $brand = $this->detectBrand($model);
+
             $sneaker = Sneaker::updateOrCreate(
                 ['inventory_number' => (int) $inventoryNumber],
                 [
+                    'brand' => $brand,
                     'model' => $model,
                     'colorway' => $colorway,
                     'style_code' => $this->cleanDash($row['D']),
@@ -151,6 +154,25 @@ class ImportSneakersFromExcel extends Command
         }
 
         return null;
+    }
+
+    private function detectBrand(string $model): ?string
+    {
+        $lower = strtolower($model);
+
+        return match (true) {
+            str_contains($lower, 'jordan') => 'Jordan',
+            str_contains($lower, 'air force') || str_contains($lower, 'nike') => 'Nike',
+            str_contains($lower, 'yeezy') => 'Yeezy',
+            str_contains($lower, 'adidas') => 'Adidas',
+            str_contains($lower, 'new balance') => 'New Balance',
+            str_contains($lower, 'birkenstock') => 'Birkenstock',
+            str_contains($lower, 'puma') => 'Puma',
+            str_contains($lower, 'reebok') => 'Reebok',
+            str_contains($lower, 'converse') => 'Converse',
+            str_contains($lower, 'asics') => 'Asics',
+            default => null,
+        };
     }
 
     private function cleanDash(?string $value): ?string

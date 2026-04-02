@@ -18,6 +18,7 @@ class Sneaker extends Model
 
     protected $fillable = [
         'inventory_number',
+        'brand',
         'model',
         'colorway',
         'style_code',
