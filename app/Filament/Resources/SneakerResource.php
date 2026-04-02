@@ -68,6 +68,22 @@ class SneakerResource extends Resource
                             ->label('# Inventario')
                             ->numeric()
                             ->required(),
+                        Select::make('brand')
+                            ->label('Marca')
+                            ->options([
+                                'Jordan' => 'Jordan',
+                                'Nike' => 'Nike',
+                                'Adidas' => 'Adidas',
+                                'Yeezy' => 'Yeezy',
+                                'New Balance' => 'New Balance',
+                                'Birkenstock' => 'Birkenstock',
+                                'Puma' => 'Puma',
+                                'Reebok' => 'Reebok',
+                                'Converse' => 'Converse',
+                                'Asics' => 'Asics',
+                            ])
+                            ->searchable()
+                            ->required(),
                         TextInput::make('model')
                             ->label('Modelo')
                             ->required()
@@ -173,6 +189,11 @@ class SneakerResource extends Resource
                     ->size(40)
                     ->checkFileExistence(false),
 
+                TextColumn::make('brand')
+                    ->label('Marca')
+                    ->sortable()
+                    ->searchable(),
+
                 TextColumn::make('model')
                     ->label('Modelo')
                     ->searchable()
@@ -183,13 +204,6 @@ class SneakerResource extends Resource
                     ->label('Colorway')
                     ->searchable()
                     ->limit(20),
-
-                TextColumn::make('style_code')
-                    ->label('Style Code')
-                    ->searchable()
-                    ->copyable()
-                    ->fontFamily('mono')
-                    ->size('sm'),
 
                 TextColumn::make('size')
                     ->label('Talla')
@@ -236,18 +250,6 @@ class SneakerResource extends Resource
                     ->rules(['nullable', 'numeric'])
                     ->sortable(),
 
-                TextColumn::make('profit')
-                    ->label('Ganancia')
-                    ->prefix('Q')
-                    ->getStateUsing(fn (Sneaker $record) => $record->profit)
-                    ->numeric()
-                    ->color(fn (Sneaker $record) => match (true) {
-                        $record->profit === null => 'gray',
-                        $record->profit > 0 => 'success',
-                        $record->profit < 0 => 'danger',
-                        default => 'gray',
-                    }),
-
                 TextColumn::make('margin')
                     ->label('Margen')
                     ->suffix('%')
@@ -266,9 +268,6 @@ class SneakerResource extends Resource
                     ->options(SneakerDecision::class)
                     ->sortable(),
 
-                ToggleColumn::make('is_public')
-                    ->label('Publico'),
-
                 TextColumn::make('stockx_url')
                     ->label('StockX')
                     ->url(fn (Sneaker $record) => $record->stockx_url)
@@ -280,8 +279,14 @@ class SneakerResource extends Resource
             ])
             ->defaultSort('inventory_number')
             ->filters([
+                SelectFilter::make('brand')
+                    ->label('Marca')
+                    ->options(fn () => Sneaker::whereNotNull('brand')->distinct()->pluck('brand', 'brand')->toArray())
+                    ->multiple()
+                    ->searchable(),
+
                 SelectFilter::make('decision')
-                    ->label('Decision')
+                    ->label('Decisión')
                     ->options(SneakerDecision::class)
                     ->multiple(),
 
