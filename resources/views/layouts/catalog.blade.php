@@ -31,6 +31,16 @@
                     Catálogo
                 </a>
                 @auth
+                    @if(Auth::user()->hasRole('comprador'))
+                        <a href="{{ route('offers.index') }}" class="text-sm text-neutral-500 hover:text-orange-400 transition-colors">
+                            Mis Ofertas
+                            @if(($pendingOffersCount ?? 0) > 0)
+                                <span class="ml-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold bg-orange-500 text-white rounded-full">
+                                    {{ $pendingOffersCount }}
+                                </span>
+                            @endif
+                        </a>
+                    @endif
                     @if(Auth::user()->hasRole(['admin', 'vendedor']))
                         <a href="/admin" class="text-sm text-neutral-500 hover:text-orange-400 transition-colors">
                             Panel

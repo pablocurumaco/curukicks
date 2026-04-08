@@ -25,5 +25,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@curukicks.com',
         ]);
         $pablo->assignRole(['admin', 'vendedor']);
+
+        $comprador = User::factory()->create([
+            'name' => 'Comprador Test',
+            'email' => 'comprador@curukicks.com',
+        ]);
+        $comprador->assignRole('comprador');
     }
 }

@@ -8,6 +8,55 @@
         <p class="text-neutral-400 mt-2">{{ $sneakers->count() }} pares disponibles</p>
     </div>
 
+    {{-- Filters --}}
+    <form method="GET" action="{{ route('catalog.index') }}" class="mb-8 bg-neutral-900 rounded-xl border border-neutral-800 p-4">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            <select name="brand" class="bg-neutral-800 border border-neutral-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-orange-500">
+                <option value="">Marca</option>
+                @foreach($brands as $brand)
+                    <option value="{{ $brand }}" {{ request('brand') === $brand ? 'selected' : '' }}>{{ $brand }}</option>
+                @endforeach
+            </select>
+
+            <select name="condition" class="bg-neutral-800 border border-neutral-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-orange-500">
+                <option value="">Estado</option>
+                <option value="DS" {{ request('condition') === 'DS' ? 'selected' : '' }}>Deadstock</option>
+                <option value="Used" {{ request('condition') === 'Used' ? 'selected' : '' }}>Usado</option>
+            </select>
+
+            <select name="size" class="bg-neutral-800 border border-neutral-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-orange-500">
+                <option value="">Talla</option>
+                @foreach($sizes as $size)
+                    <option value="{{ $size }}" {{ request('size') === $size ? 'selected' : '' }}>{{ $size }}</option>
+                @endforeach
+            </select>
+
+            <input type="number" name="price_min" placeholder="Precio mín" value="{{ request('price_min') }}"
+                   class="bg-neutral-800 border border-neutral-700 rounded-lg px-3 py-2 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-orange-500">
+
+            <input type="number" name="price_max" placeholder="Precio máx" value="{{ request('price_max') }}"
+                   class="bg-neutral-800 border border-neutral-700 rounded-lg px-3 py-2 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-orange-500">
+
+            <select name="sort" class="bg-neutral-800 border border-neutral-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-orange-500">
+                <option value="model_asc" {{ request('sort', 'model_asc') === 'model_asc' ? 'selected' : '' }}>Nombre A-Z</option>
+                <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>Precio ↑</option>
+                <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>Precio ↓</option>
+                <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>Más recientes</option>
+                <option value="size_asc" {{ request('sort') === 'size_asc' ? 'selected' : '' }}>Talla ↑</option>
+            </select>
+        </div>
+        <div class="flex gap-3 mt-3">
+            <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors">
+                Filtrar
+            </button>
+            @if(request()->hasAny(['brand', 'condition', 'size', 'price_min', 'price_max', 'sort']))
+                <a href="{{ route('catalog.index') }}" class="text-sm text-neutral-500 hover:text-orange-400 transition-colors py-2">
+                    Limpiar filtros
+                </a>
+            @endif
+        </div>
+    </form>
+
     @if($sneakers->isEmpty())
         <div class="text-center py-20">
             <p class="text-neutral-500 text-lg">No hay sneakers publicados todavía.</p>

@@ -324,6 +324,13 @@ class SneakerResource extends Resource
             ->striped();
     }
 
+    public static function getRelations(): array
+    {
+        return [
+            RelationManagers\OffersRelationManager::class,
+        ];
+    }
+
     public static function getPages(): array
     {
         return [

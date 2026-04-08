@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Sneaker extends Model
@@ -107,6 +108,22 @@ class Sneaker extends Model
 
             return round(($this->profit / $this->cost_paid) * 100, 1);
         });
+    }
+
+    // Relationships
+
+    public function offers(): HasMany
+    {
+        return $this->hasMany(Offer::class);
+    }
+
+    public function pendingOfferFrom(?User $user): ?Offer
+    {
+        if (! $user) {
+            return null;
+        }
+
+        return $this->offers()->where('user_id', $user->id)->pending()->first();
     }
 
     // Scopes

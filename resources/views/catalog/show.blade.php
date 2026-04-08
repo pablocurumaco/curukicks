@@ -4,6 +4,17 @@
 @section('description', $sneaker->model . ' ' . $sneaker->colorway . ' talla ' . $sneaker->size . '. ' . ($sneaker->condition->value === 'DS' ? 'Deadstock/Nuevo.' : 'Usado.'))
 
 @section('content')
+    @if(session('success'))
+        <div class="bg-green-900/50 border border-green-700 text-green-300 rounded-lg p-4 mb-6">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if(session('error'))
+        <div class="bg-red-900/50 border border-red-700 text-red-300 rounded-lg p-4 mb-6">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="mb-6">
         <a href="{{ route('catalog.index') }}" class="text-sm text-neutral-500 hover:text-orange-400 transition-colors">
             &larr; Volver al catálogo
@@ -85,6 +96,50 @@
                     @endif
                 </div>
             </div>
+
+            {{-- Offer Section --}}
+            @auth
+                @if(Auth::user()->hasRole('comprador'))
+                    <div class="mt-8">
+                        @if($existingOffer)
+                            <div class="bg-neutral-900 rounded-xl p-5 border border-orange-500/30">
+                                <p class="text-sm text-neutral-400">Tu oferta pendiente</p>
+                                <p class="text-2xl font-bold text-orange-400 mt-1">Q{{ number_format($existingOffer->amount) }}</p>
+                                <form method="POST" action="{{ route('offers.destroy', $existingOffer) }}" class="mt-3">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-sm text-red-400 hover:text-red-300 transition-colors">
+                                        Cancelar oferta
+                                    </button>
+                                </form>
+                            </div>
+                        @else
+                            <form method="POST" action="{{ route('offers.store', $sneaker) }}" class="bg-neutral-900 rounded-xl p-5 border border-neutral-800">
+                                @csrf
+                                <label for="amount" class="block text-sm text-neutral-400 mb-2">Hacé tu oferta (Q)</label>
+                                <div class="flex gap-3">
+                                    <input type="number" name="amount" id="amount" min="1"
+                                           placeholder="Ej: 1500" required
+                                           value="{{ old('amount') }}"
+                                           class="flex-1 bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-2.5 text-white placeholder-neutral-500 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
+                                    <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors">
+                                        Ofertar
+                                    </button>
+                                </div>
+                                @error('amount')
+                                    <p class="text-red-400 text-sm mt-2">{{ $message }}</p>
+                                @enderror
+                            </form>
+                        @endif
+                    </div>
+                @endif
+            @else
+                <div class="mt-8">
+                    <a href="{{ route('login') }}" class="text-sm text-neutral-500 hover:text-orange-400 transition-colors">
+                        Iniciá sesión para hacer una oferta &rarr;
+                    </a>
+                </div>
+            @endauth
         </div>
     </div>
 @endsection
