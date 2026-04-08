@@ -27,7 +27,9 @@
                 Curu<span class="text-orange-500">Kicks</span>
             </a>
             <div class="flex items-center gap-4">
-                <p class="text-sm text-neutral-500 hidden sm:block">Sneakers GT</p>
+                <a href="{{ route('catalog.index') }}" class="text-sm text-neutral-500 hover:text-orange-400 transition-colors">
+                    Catálogo
+                </a>
                 @auth
                     @if(Auth::user()->hasRole(['admin', 'vendedor']))
                         <a href="/admin" class="text-sm text-neutral-500 hover:text-orange-400 transition-colors">
