@@ -327,7 +327,7 @@ class SneakerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\OffersRelationManager::class,
+            SneakerResource\RelationManagers\OffersRelationManager::class,
         ];
     }
 
