@@ -77,14 +77,13 @@
                         <p class="text-xs text-neutral-500 uppercase tracking-wider">Caja</p>
                         <p class="text-lg font-semibold mt-1">{{ $sneaker->has_box ? 'Sí' : 'No' }}</p>
                     </div>
+                    @if($sneaker->stockx_url)
+                        <a href="{{ $sneaker->stockx_url }}" target="_blank" rel="noopener noreferrer"
+                           class="bg-[#006340] hover:bg-[#00754a] rounded-xl p-4 border border-[#007a4d] flex items-center justify-center transition-colors">
+                            <span class="text-lg font-bold text-white tracking-wide">StockX</span>
+                        </a>
+                    @endif
                 </div>
-            </div>
-
-            {{-- CTA --}}
-            <div class="mt-10">
-                <p class="text-sm text-neutral-500">
-                    ¿Interesado? Escribime por WhatsApp para negociar.
-                </p>
             </div>
         </div>
     </div>
